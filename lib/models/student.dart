@@ -17,4 +17,17 @@ class Student {
     this.lastName = lastName;
     this.grade = grade;
   }
+
+  String get getStatus {
+    String message = "";
+    if (this.grade >= 50)
+      message = "Kecdi";
+    else if (this.grade > 40)
+      message = "Yoxlamaya qaldi";
+    else
+      message = "Kesildi";
+
+    this.status = message;
+    return this.status;
+  }
 }

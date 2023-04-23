@@ -17,12 +17,21 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _HomeScreenState();
+  }
+}
+
+class _HomeScreenState extends State {
   List<Student> students = [
     Student.withId(1, "Cabbar", "Allahverdiyev", 45),
-    Student.withId(2, "Seymur", "Veliyev", 65),
+    Student.withId(2, "Seymur", "Veliyev", 25),
     Student.withId(3, "Murad", "Heshimov", 70)
   ];
+
+  Student selectedStudent = Student.withId(0, "", "", 0);
 
   @override
   Widget build(BuildContext context) {
@@ -43,19 +52,96 @@ class HomeScreen extends StatelessWidget {
               return ListTile(
                 title: Text(
                     students[index].firstName + " " + students[index].lastName),
-                subtitle: Text(
-                    "Imthan neticesi : " + students[index].grade.toString()),
+                subtitle: Text("Imthan neticesi : " +
+                    students[index].grade.toString() +
+                    "[" +
+                    students[index].getStatus +
+                    "]"),
                 leading: CircleAvatar(
                   backgroundImage: NetworkImage(
                       "https://avatars.githubusercontent.com/u/77884315?v=4"),
                 ),
-                trailing: Icon(Icons.done),
+                trailing: buildStatusIcon(students[index].grade),
+                onTap: () {
+                  setState(() {
+                    this.selectedStudent = students[index];
+                  });
+                },
+                onLongPress: () => print("Uzun basildi"),
               );
             },
           ),
+        ),
+        Text("Secilen " + selectedStudent.firstName),
+        Row(
+          children: [
+            Flexible(
+              fit: FlexFit.tight,
+              flex: 2,
+              child: ElevatedButton(
+                child: Row(children: [
+                  Icon(Icons.add),
+                  SizedBox(
+                    width: 5.0,
+                  ),
+                  Text("Yeni telebe")
+                ]),
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.greenAccent),
+                onPressed: () {
+                  print("tezte");
+                },
+              ),
+            ),
+            Flexible(
+              fit: FlexFit.tight,
+              flex: 2,
+              child: ElevatedButton(
+                child: Row(children: [
+                  Icon(Icons.add),
+                  SizedBox(
+                    width: 5.0,
+                  ),
+                  Text("Yenile")
+                ]),
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.greenAccent),
+                onPressed: () {
+                  print("Yenile");
+                },
+              ),
+            ),
+            Flexible(
+              fit: FlexFit.tight,
+              flex: 1,
+              child: ElevatedButton(
+                child: Row(children: [
+                  Icon(Icons.add),
+                  SizedBox(
+                    width: 5.0,
+                  ),
+                  Text("Sil")
+                ]),
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.greenAccent),
+                onPressed: () {
+                  print("sil");
+                },
+              ),
+            )
+          ],
         )
       ],
     );
+  }
+
+  Widget buildStatusIcon(int grade) {
+    if (grade >= 50)
+      return Icon(Icons.done);
+    else if (grade > 40)
+      return Icon(Icons.album);
+    else
+      return Icon(Icons.clear);
   }
 }
 
