@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'models/student.dart';
+import 'screens/student_add.dart';
 
 final Color darkBlue = Color.fromARGB(255, 18, 32, 47);
 void main() {
@@ -89,7 +90,10 @@ class _HomeScreenState extends State {
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.greenAccent),
                 onPressed: () {
-                  print("tezte");
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => StudentAdd(students)));
                 },
               ),
             ),
@@ -116,14 +120,14 @@ class _HomeScreenState extends State {
               flex: 1,
               child: ElevatedButton(
                 child: Row(children: [
-                  Icon(Icons.add),
+                  Icon(Icons.remove),
                   SizedBox(
                     width: 5.0,
                   ),
                   Text("Sil")
                 ]),
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.greenAccent),
+                    backgroundColor: Color.fromARGB(255, 241, 101, 7)),
                 onPressed: () {
                   print("sil");
                 },
